@@ -38,13 +38,32 @@ class OtentikasiController extends Controller
                 }else{
                   return "Tertanggung";
                 }
+            })->editColumn('rekam_jenis', function ($otentikasi) {
+                if($otentikasi->rekam_jenis == 0){
+                  return "Pegawai";
+                }else if($otentikasi->rekam_jenis == 1){
+                  return "Janda";
+                }else if($otentikasi->rekam_jenis == 2){
+                  return "Duda";
+                }else{
+                  return "Anak";
+                }
             })->editColumn('status_otentikasi', function ($otentikasi) {
                 if($otentikasi->status_penerima == 1){
                   return "Berhasil";
                 }else{
                   return "Gagal";
                 }
-            })->rawColumns(['tanggal_lahir'])->make(true);
+            })->editColumn('foto', function ($otentikasi) {
+                if ($otentikasi->foto) {
+                    $image = asset("storage/" . $otentikasi->foto);
+                    return '<img width="100px" height="100px" src="' . $image . '" alt="Foto Posisi Depan">';
+                } else {
+                  $image = asset("admin/assets/img/video.png");
+                  $link = asset("storage/" . $otentikasi->video);
+                  return '<a href="'.$link.'" target=_blank><img width="50px" height="50px" src="' . $image . '" alt="Dokumen"></a>';
+                }
+            })->rawColumns(['foto'])->make(true);
         }
 
 

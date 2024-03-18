@@ -41,6 +41,7 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     Route::resource('jadwal', JadwalController::class);
 
     Route::resource('informasi', InformasiController::class);
+    //Route::post('getKontak', [InformasiController::class, 'getKontak'])->name('getKontak');
 
     // pegawai
     Route::resource('pegawai', PegawaiController::class);
@@ -54,11 +55,16 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     Route::resource('registrasi', RegistrasiController::class);
     Route::post('konfirmasi', [RegistrasiController::class, 'konfirmasi'])->name('konfirmasi');
     Route::post('resetwajah', [RegistrasiController::class, 'resetwajah'])->name('resetwajah');
+    Route::post('nonaktifkan', [RegistrasiController::class, 'nonaktifkan'])->name('nonaktifkan');
+
     // otentikasi
     Route::resource('otentikasi', OtentikasiController::class);
 
     // otentikasi
     // Route::resource('informasi', [InformasiControlle::class]);
+
+    //kontak
+    Route::resource('kontak', RegistrasiController::class);
 });
 
 
@@ -72,5 +78,6 @@ Route::match(["GET", "POST"], '/register', function () {
     return redirect('/login');
 })->name('register');
 
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::resource('home', App\Http\Controllers\HomeController::class);
+//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+//Route::post('getKontak', [HomeController::class, 'getKontak'])->name('getKontak');

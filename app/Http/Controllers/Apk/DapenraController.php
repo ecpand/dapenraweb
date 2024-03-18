@@ -12,6 +12,7 @@ use App\Models\Pegawai;
 use App\Models\Jadwal;
 use App\Models\Otentikasi;
 use App\Models\Informasi;
+use App\Models\Kontak;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
@@ -37,7 +38,7 @@ class DapenraController extends Controller
       ]);
     }
 
-    $rekamlogin = Rekam::where('nik', $request->nik)->get();
+    $rekamlogin = Rekam::where('nik', $request->nik)->where('status_aktif',1)->get();
     $crekamlogin = count($rekamlogin);
     if($crekamlogin > 0){
       if (Hash::check($request->password, $rekamlogin[0]->password)) {
@@ -212,7 +213,7 @@ class DapenraController extends Controller
                 "kanan" => $kanan,
                 "atas" => "",
                 "bawah" => "",
-                "status" => 3
+                "status" => 1
               ];
           $update = Rekam::findOrFail($id)->update($data);
   }
@@ -284,6 +285,11 @@ class DapenraController extends Controller
               'status_penerima' => $request->input('status_penerima'),
               'status_otentikasi' => $request->input('status_otentikasi')
         ]);
+  }
+
+  public function getKontak(){
+      $kontak =  Kontak::all();
+      return $kontak;
   }
 
 

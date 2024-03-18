@@ -29,16 +29,6 @@ class RegistrasiController extends Controller
                 }else{
                   return "Anak";
                 }
-            })->editColumn('status', function ($registrasi) {
-                if($registrasi->status == 1){
-                  return "Belum Di Verifikasi";
-                }else if($registrasi->status == 2){
-                  return "Telah Di Verifikasi, Rekam Ulang";
-                }else if($registrasi->status == 3){
-                  return "Telah Di Verifikasi";
-                }else{
-                  return "Anak";
-                }
             })->editColumn('depan', function ($registrasi) {
                 if ($registrasi->depan) {
                     $image = asset("storage/" . $registrasi->depan);
@@ -131,8 +121,15 @@ class RegistrasiController extends Controller
     public function konfirmasi(Request $request){
         $id = $request->input('id');
         echo $id;
-        $data = ["status" => 2];
+        $data = ["status" => 3];
         Rekam::findOrFail($id)->update($data);
+    }
+
+    public function nonaktifkan(Request $request){
+      $id = $request->input('id');
+      //echo $id;
+      $data = [ "status_aktif" => 2];
+      Rekam::findOrFail($id)->update($data);
     }
 
 }

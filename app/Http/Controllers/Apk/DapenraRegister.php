@@ -70,7 +70,7 @@ class DapenraRegister extends Controller
               'telepon_kerabat' => $request->input('telepon_kerabat'),
               'password' => $password,
               'dokumen' => $dokumen,
-              'status' => 1,
+              'status' => 0,
               'status_aktif' => 1
             ]);
 
@@ -128,7 +128,7 @@ class DapenraRegister extends Controller
             if($countrekam > 0){
               return response()->json([
                 'success' => false,
-                'message' => "Status Aktif",
+                'message' => "Pengguna Belum dapat dialihkan kepada penerima manfaat, harap hub. Administrator",
                 'data' => "Pengguna Belum dapat dialihkan kepada penerima manfaat, harap hub. Administrator"
               ]);
             }else{
@@ -140,7 +140,7 @@ class DapenraRegister extends Controller
                       $dokumen = $request->file('dokumen')->store('dokumen/rekam/'.$folder, 'public');
                   }
                   $password = bcrypt($request->input('password'));
-                  $niknya = $request->input('nik').'_'.$ttanggung[0]->no_urut;
+                  $niknya = $request->input('nik');
                   $idt = $ttanggung[0]->id;
                   $post = Rekam::create([
                     'id_pegawai' => $idpegawai,
@@ -155,7 +155,7 @@ class DapenraRegister extends Controller
                     'telepon_kerabat' => $request->input('telepon_kerabat'),
                     'password' => $password,
                     'dokumen' => $dokumen,
-                    'status' => 1,
+                    'status' => 0,
                     'status_aktif' => 1
                   ]);
 

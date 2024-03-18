@@ -33,7 +33,8 @@ class Rekam extends Model
         'bawah',
         'dokumen',
         'status',
+        'status_aktif'
     ];
 
-    
+
 }

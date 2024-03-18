@@ -23,6 +23,7 @@ Route::post('rpensiun', [DapenraRegister::class, 'registerpensiun']);
 Route::post('rtertanggung', [DapenraRegister::class, 'registertertanggung']);
 Route::post('getPensiun', [DapenraRegister::class, 'getPensiun']);
 Route::post('/login', [DapenraController::class, 'login']);
+Route::get('getKontak', [DapenraController::class, 'getKontak']);
 //Route::post('/simpanRekam',[DapenraController::class, 'simpanrekam']);
 
 Route::middleware(['auth:sanctum'])->group(function () {

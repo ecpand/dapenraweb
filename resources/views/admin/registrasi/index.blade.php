@@ -13,7 +13,7 @@ registrasi
 
             </div>
             <div class="ml-md-auto py-2 py-md-0">
-                <button style="width: 100px" type="button" id="add" class="btn  btn-round btn-secondary ">Add</button>
+                <!--<button style="width: 100px" type="button" id="add" class="btn  btn-round btn-secondary ">Add</button>-->
             </div>
         </div>
     </div>
@@ -28,8 +28,7 @@ registrasi
                         <table id="table-registrasi" class="display table table-striped table-hover">
                             <thead>
                                 <tr>
-                                    <th>Confirm</th>
-                                    <th>Reset</th>
+
                                     <th>NIK</th>
                                     <th>Nama Penerima</th>
                                     <th>Jenis Manfaat</th>
@@ -44,7 +43,11 @@ registrasi
                                     <!--<th>Foto Atas</th>
                                     <th>Foto Bawah</th>-->
                                     <th>Dokumen</th>
-                                    <th>Status</th>
+                                    <!--<th>Status</th>-->
+                                    <!--<th>Action</th>-->
+                                    <th>Confirm</th>
+                                    <th>Reset</th>
+                                    <th>Akun</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -173,6 +176,60 @@ registrasi
     })
   }
 
+  function nonaktifkan(attr){
+    url = "{{route('admin.nonaktifkan')}}";
+    var id = $(attr).attr("dataid");
+    csrf_token = $('meta[name="csrf-token"]').attr('content');
+    //console.log(csrf_token);
+    swal({
+      title: 'Apakah Ingin Menonaktifkan Pengguna Ini?',
+      text: "Akun Pengguna Aplikasi Otentikasi Di Alihkan!",
+      type: 'warning',
+      buttons:{
+        confirm: {
+          text : 'Yes, Approved!',
+          className : 'btn btn-success'
+        },
+        cancel: {
+          visible: true,
+          className: 'btn btn-danger'
+          }
+        }
+    }).then((Confirm) => {
+        if(Confirm){
+          $.ajax({
+              url : url,
+              method:"POST",
+              data : {
+                "_token" : csrf_token,
+                "id" : id
+              },
+              success: function(response){
+                    $('#table-registrasi').DataTable().ajax.reload();
+                    swal("Good job!", "Successfully Confirm", {
+                    icon : "success",
+                    buttons: {
+                      confirm: {
+                        className : 'btn btn-success'
+                      }
+                    },
+                  });
+                },
+              error: function(xhr){
+                    swal("Oops....!", "Something went wrong!", {
+                      icon : "error",
+                      buttons: {
+                        confirm: {
+                          className : 'btn btn-danger'
+                        }
+                      },
+                    });
+              }
+            })
+        }
+    })
+  }
+
 </script>
 
 <script>
@@ -245,29 +302,14 @@ registrasi
         responsive: true,
             processing: true,
             serverSide: true,
+            layout: {
+                topStart: {
+                    buttons: ['excel']
+                }
+            },
             ajax: "{{ route('admin.registrasi.index') }}",
                 columns: [
-                {data: 'status', name: 'status',
-                "render" : function(data, type, row, meta){
-                  if(data == 1){
-                    return '<button class="btn btn-sm btn-info" onclick="konfirmasi(this)" dataid='+row.id+'><i class="fa fa-check"></i></button>'
-                  }else{
-                    return "Approved";
-                  }
 
-                }
-                },
-                {data: 'status', name: 'status',
-
-                "render" : function(data, type, row, meta){
-                  if(data == 3){
-                    return '<button class="btn btn-sm btn-info" onclick="resetwajah(this)" dataid='+row.id+'><i class="fa fa-undo"></i></button>';
-                  }else{
-                    return "-"
-                  }
-
-                }
-                },
                 {data: 'nik', name: 'nik'},
                 {data: 'nama_penerima', name: 'nama_penerima'},
                 {data: 'jenis_manfaat', name: 'jenis_manfaat'},
@@ -282,12 +324,46 @@ registrasi
                 /*{data: 'atas', name: 'nama_p'},
                 {data: 'bawah', name: 'jenkel_p'},*/
                 {data: 'dokumen', name: 'tanggal_lahir_p'},
-                {data: 'status', name: 'status'},
+                //{data: 'status', name: 'status'},
 
-
+                /*
                 {data: 'id', name: 'id',
                 "render": function (data, type, row, meta) {
                         return'<div> <a href="{{url("admin/registrasi")}}/'+data+'/edit"class="btn btn-primary btn-sm  button-update" title="Edit" data-id='+data+'><i class="fa fa-edit"></i></a>  <a href="{{url("admin/registrasi")}}/'+data+'" class="btn btn-danger btn-sm delete-confirm" title="Hapus"><i class="fa fa-times"></i></a>  </div>'
+                        },
+                },*/
+
+                {data: 'status', name: 'status',
+                "render" : function(data, type, row, meta){
+                  if(data == 1){
+                    return '<button class="btn btn-sm btn-info" onclick="konfirmasi(this)" dataid='+row.id+'><i class="fa fa-check"></i></button>'
+                  }else{
+                    return "Approved";
+                  }
+                }
+                },
+                {data: 'status', name: 'status',
+                "render" : function(data, type, row, meta){
+                  if(data == 3){
+                    return '<button class="btn btn-sm btn-info" onclick="resetwajah(this)" dataid='+row.id+'><i class="fa fa-undo"></i></button>';
+                  }else{
+                    return "-"
+                  }
+
+                }
+                },
+                {data: 'status_aktif', name: 'status_aktif',
+                "render" : function(data, type, row, meta){
+                  if(data == 1){
+                    return '<button class="btn btn-sm btn-success" onclick="nonaktifkan(this)" dataid='+row.id+'><i class="fa fa-check"></i></button>';
+                  }else{
+                    return "Non Aktif";
+                  }
+                }
+                },
+                {data: 'id', name: 'id',
+                "render": function (data, type, row, meta) {
+                          return'<div><a href="{{url("admin/registrasi")}}/'+data+'" class="btn btn-danger btn-sm delete-confirm" title="Hapus"><i class="fa fa-times"></i></a>  </div>'
                         },
                 },
             ]

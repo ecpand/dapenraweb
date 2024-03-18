@@ -38,7 +38,7 @@
             </div>
             <ul class="nav nav-primary">
                 <li class="nav-item {{request()->routeIs('home') ? 'active' : ''}} ">
-                    <a href="{{route('home')}}">
+                    <a href="{{route('home.index')}}">
                         <i class="fas fa-home"></i>
                         <p>Dashboard</p>
                     </a>

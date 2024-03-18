@@ -25,7 +25,7 @@ Otentikasi
             <div class="card full-height">
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table id="table-otentikasi" class="display table table-striped table-hover">
+                        <table id="table-otentikasi" class="display nowrap" style="width:100%">
                             <thead>
                                 <tr>
                                     <th>Tanggal</th>
@@ -37,7 +37,7 @@ Otentikasi
                                     <th>Alamat</th>
                                     <th>Telepon</th>
                                     <th>Telepon Kerabat</th>
-                                    <th>Foto</th>
+                                    <th>Dokumentasi</th>
                                     <th>Status Penerima</th>
                                     <th>Status Otentikasi</th>
                                 </tr>
@@ -57,6 +57,11 @@ Otentikasi
         responsive: true,
             processing: true,
             serverSide: true,
+            layout: {
+                topStart: {
+                    buttons: ['excel']
+                }
+            },
             ajax: "{{ route('admin.otentikasi.index') }}",
                 columns: [
                 {data: 'tanggal_waktu', name: 'tanggal_waktu'},
