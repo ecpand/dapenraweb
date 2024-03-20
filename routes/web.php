@@ -50,6 +50,7 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
 
     // tertanggung
     Route::resource('tertanggung', TertanggungController::class);
+    Route::put('/update', [TertanggungController::class, 'update'])->name('updateNew');
 
     // registrasi
     Route::resource('registrasi', RegistrasiController::class);

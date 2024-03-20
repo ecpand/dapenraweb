@@ -16,8 +16,8 @@
                             <input class="form-control" type="text" name="nik" id="nik">
                         </div>
                         <div class="form-group">
-                            <label for="noktp">No KTP</label>
-                            <input class="form-control" type="number" name="noktp" id="noktp">
+                            <label for="no_urut">Norut</label>
+                            <input class="form-control" type="text" name="no_urut" id="no_urut">
                         </div>
                         <div class="form-group">
                             <label for="nama">Nama</label>
@@ -43,42 +43,14 @@
                             <input class="form-control" type="text" name="alamat" id="alamat">
                         </div>
                         <div class="form-group">
-                            <label for="rtrw">RT / RW</label>
-                            <input class="form-control" type="text" name="rtrw" id="rtrw">
-                        </div>
-                        <div class="form-group">
-                            <label for="kelurahan">Kelurahan</label>
-                            <input class="form-control" type="text" name="kelurahan" id="kelurahan">
-                        </div>
-                        <div class="form-group">
-                            <label for="kecamatan">Kecamatan</label>
-                            <input class="form-control" type="text" name="kecamatan" id="kecamatan">
-                        </div>
-                        <div class="form-group">
-                            <label for="kota">Kota</label>
-                            <input class="form-control" type="text" name="kota" id="kota">
-                        </div>
-                        <div class="form-group">
-                            <label for="provinsi">Provinsi</label>
-                            <input class="form-control" type="text" name="provinsi" id="provinsi">
-                        </div>
-                        <div class="form-group">
-                            <label for="kodepos">Kode Pos</label>
-                            <input class="form-control" type="text" name="kodepos" id="kodepos">
-                        </div>
-                        <div class="form-group">
                             <label for="telepon">Telepon</label>
                             <input class="form-control" type="text" name="telepon" id="telepon">
                         </div>
                         <div class="form-group">
-                            <label for="stkwn">STKWN</label>
-                            <select class="form-control" name="stkwn">
-                                <option value="K2">K2</option>
-                                <option value="K1">K1</option>
-                                <option value="J1">J1</option>
-                                <option value="J2">J2</option>
-                                <option value="A1">A1</option>
-                                <option value="A2">A2</option>
+                            <label for="status">Status</label>
+                            <select class="form-control" name="status">
+                                <option value="1">Istri / Suami</option>
+                                <option value="2">Anak</option>
                             </select>
                         </div>
                         <div class="form-group">

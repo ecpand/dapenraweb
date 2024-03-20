@@ -25,4 +25,9 @@ class Tertanggung extends Model
     public function toPegawai(){
         return $this->belongsTo( 'App\Models\Pegawai','id_pegawai');
     }
+
+    public function getNikAttribute()
+    {
+        return $this->toPegawai->nik;
+    }
 }

@@ -59,9 +59,13 @@ Tertanggung
     $('#add').on('click', function() {
         $('.modal-title').html('Tambah Tertanggung');
         $('#id').val("");
-        $('#title').val("");
-        $('#start_date').val("");
-        $('#end_date').val("");
+        $('#nik').val("");
+        $('#no_urut').val("");
+        $('#nama').val("");
+        $('#tempat_lahir').val("");
+        $('#tanggal_lahir').val("");
+        $('#alamat').val("");
+        $('#telepon').val("");
         $('#modal-tertanggung').modal('show');
         $('#btn')
             .removeClass('btn-info')
@@ -162,9 +166,15 @@ Tertanggung
         let id = $(this).data('id');
         $.get('/admin/tertanggung/' + id + '/edit', function (data) {
             $('#id').val(data.data.id);
-            $('#title').val(data.data.nama);
-            $('#start_date').val(data.data.tanggal_mulai);
-            $('#end_date').val(data.data.tanggal_akhir);
+            $('#nik').val(data.nik);
+            $('#no_urut').val(data.data.no_urut);
+            $('#nama').val(data.data.nama_tertanggung);
+            $('#jenkel').val(data.data.jenkel);
+            $('#tempat_lahir').val(data.data.tempat_lahir);
+            $('#tanggal_lahir').val(data.data.tanggal_lahir);
+            $('#alamat').val(data.data.alamat);
+            $('#telepon').val(data.data.telepon);
+            $('#status').val(data.data.status);
             $('#modal-tertanggung').modal('show');
         })
     });

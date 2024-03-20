@@ -33,7 +33,18 @@ class TertanggungController extends Controller
             //echo json_encode($tertanggung);
             return DataTables::of($tertanggung)->editColumn('tanggal_lahir', function ($tertanggung) {
                 return Carbon::parse($tertanggung->tanggal_lahir)->isoFormat('D MMMM Y ');
-            })->rawColumns(['tanggal_lahir'])->make(true);
+            })->editColumn('status', function ($tertanggung) {
+              if($tertanggung->status == 1){
+                if($tertanggung->jenkel == "L"){
+                    return "Suami";
+                }else{
+                    return "Istri";
+                }
+              }else{
+                return "Anak";
+              }
+
+            })->rawColumns(['tanggal_lahir','status'])->make(true);
         }
 
         return view('admin.tertanggung.index');
@@ -43,52 +54,72 @@ class TertanggungController extends Controller
     {
         $this->validate($request, [
             'nik' => 'required|string',
-            'noktp' => 'required|string',
-            'nama' => 'required|string',
-            'tempat_lahir' => 'required|string',
+            'no_urut' => 'required',
+            'nama' => 'required',
+            'jenkel' => 'required',
+            'tempat_lahir' => 'required',
             'tanggal_lahir' => 'required',
-            'jenkel' => 'required|string',
             'alamat' => 'required',
-            'rtrw' => 'required|string',
-            'kelurahan' => 'required|string',
-            'kecamatan' => 'required|string',
-            'kota' => 'required|string',
-            'provinsi' => 'required|string',
-            'kodepos' => 'required|string',
-            'telepon' => 'required|string',
+            'telepon' => 'required',
+            'status' => 'required',
         ]);
 
-        Pegawai::create($request->all());
+        $pegawai = Pegawai::where('nik',$request->nik)->get();
+        $id = $pegawai[0]->id;
+        $data = array(
+          "id_pegawai" => $id,
+          "no_urut" => $request->input('no_urut'),
+          "nama_tertanggung" => $request->input('nama'),
+          "jenkel" => $request->input('jenkel'),
+          "tempat_lahir" => $request->input('tempat_lahir'),
+          "tanggal_lahir" => $request->input('tanggal_lahir'),
+          "alamat" => $request->input('alamat'),
+          "telepon" => $request->input('telepon'),
+          "status" => $request->input('status')
+        );
+
+        Tertanggung::create($data);
     }
 
     public function edit($id)
     {
-        $pegawai = Pegawai::findOrFail($id);
-        return response()->json([
-            "data" => $pegawai,
-        ]);
+      $pegawai = Tertanggung::findOrFail($id);
+      return response()->json([
+          "data" => $pegawai,
+          "nik" => $pegawai->nik,
+      ]);
     }
 
     public function update(Request $request, $id)
     {
-        $this->validate($request, [
-            'nama' => 'required|string',
-            'tanggal_mulai' => 'required',
-            'tanggal_akhir' => 'required',
-        ]);
+      $this->validate($request, [
+          'no_urut' => 'required',
+          'nama' => 'required',
+          'jenkel' => 'required',
+          'tempat_lahir' => 'required',
+          'tanggal_lahir' => 'required',
+          'alamat' => 'required',
+          'telepon' => 'required',
+          'status' => 'required',
+      ]);
 
-        $pegawai = Pegawai::findOrFail($id);
+      $pegawai = Tertanggung::findOrFail($request->input('id'));
 
-        $pegawai->update([
-            "nama" => $request->input('nama'),
-            "tanggal_mulai" => $request->input('tanggal_mulai'),
-            "tanggal_akhir" => $request->input('tanggal_akhir'),
-        ]);
+      $pegawai->update([
+          "no_urut" => $request->input('no_urut'),
+          "nama_tertanggung" => $request->input('nama'),
+          "jenkel" => $request->input('jenkel'),
+          "tempat_lahir" => $request->input('tempat_lahir'),
+          "tanggal_lahir" => $request->input('tanggal_lahir'),
+          "alamat" => $request->input('alamat'),
+          "telepon" => $request->input('telepon'),
+          "status" => $request->input('status'),
+      ]);
     }
 
     public function destroy($id)
     {
-        $pegawai = Pegawai::findOrFail($id);
+        $pegawai = Tertanggung::findOrFail($id);
         $pegawai->delete();
     }
 
