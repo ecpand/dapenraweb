@@ -60,7 +60,7 @@ class OtentikasiController extends Controller
                     return '<img width="100px" height="100px" src="' . $image . '" alt="Foto Posisi Depan">';
                 } else {
                   $image = asset("admin/assets/img/video.png");
-                  $link = asset("storage/" . $otentikasi->video);
+                  $link = asset("storage/" . $otentikasi->suara);
                   return '<a href="'.$link.'" target=_blank><img width="50px" height="50px" src="' . $image . '" alt="Dokumen"></a>';
                 }
             })->rawColumns(['foto'])->make(true);

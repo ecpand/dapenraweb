@@ -21,6 +21,13 @@ use Illuminate\Support\Carbon;
 
 class DapenraController extends Controller
 {
+  public function check(Request $request)
+    {
+        return response()->json([
+            'message' => 'Autentikasi berhasil.',
+            'user' => $request->user()
+        ]);
+    }
 
   public function login(Request $request)
   {
@@ -191,7 +198,13 @@ class DapenraController extends Controller
           ]);
         }
         $id = $request->input('id');
-        $folder = $request->input('nik');
+        $idte = Rekam::where('id', $id)->first();
+        if($idte->id_tertanggung == 0){
+            $folder = $request->input('nik');
+        }else{
+            $folder = $request->input('nik').'_'.$idte->id_tertanggung;
+        }
+       // $folder = $request->input('nik');
         //echo $request->file('photo1');
 
           if ($request->file('photo1')) {
@@ -291,7 +304,5 @@ class DapenraController extends Controller
       $kontak =  Kontak::all();
       return $kontak;
   }
-
-
 
 }

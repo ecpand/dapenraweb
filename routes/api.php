@@ -34,5 +34,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/getOt',[DapenraController::class, 'getOt']);
     Route::post('/simpanRekam',[DapenraController::class, 'simpanrekam']);
     Route::post('/simpanEx',[DapenraController::class, 'simpanEx']);
-
+    Route::post('/simpanOt',[DapenraController::class, 'simpanOt']);
 });
+
+//Route::middleware('auth:sanctum')->get('/sanctum-check', [DapenraController::class, 'check']);
+//Route::middleware('auth:sanctum')->get('/debug', [DapenraController::class, 'debug']);

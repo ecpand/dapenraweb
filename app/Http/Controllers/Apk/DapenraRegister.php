@@ -57,10 +57,11 @@ class DapenraRegister extends Controller
                 $dokumen = $request->file('dokumen')->store('dokumen/rekam/'.$folder, 'public');
             }
             $password = bcrypt($request->input('password'));
+            $niknya = strtoupper($request->input('nik'));
             $post = Rekam::create([
               'id_pegawai' => $idpegawai,
               'id_tertanggung' => 0,
-              'nik' => $request->input('nik'),
+              'nik' => $niknya,
               'nama_penerima' => $request->input('nama_penerima'),
               'jenis_manfaat' => 0,
               'tempat_lahir' => $request->input('tempat_lahir'),
@@ -135,19 +136,25 @@ class DapenraRegister extends Controller
                 $ttanggung = Tertanggung::where('id', $request->id_tertanggung)->get();
                 if(count($ttanggung) > 0){
                   $idpegawai = $users[0]->id;
-                  $folder = $users[0]->nik;
+		  $folder = $users[0]->nik.'_'.$request->id_tertanggung;
+                 // $folder = $users[0]->nik;
                   if ($request->file('dokumen')) {
                       $dokumen = $request->file('dokumen')->store('dokumen/rekam/'.$folder, 'public');
                   }
                   $password = bcrypt($request->input('password'));
-                  $niknya = $request->input('nik');
-                  $idt = $ttanggung[0]->id;
+                  $niknya = strtoupper($request->input('nik'));
+                  $idt = $request->id_tertanggung; //$ttanggung[0]->id;
+		  if($request->input('jenis_manfaat') == "janda" || $request->input('jenis_manfaat') == "duda"){
+                      $manfaat = 1;
+                  }else{
+                      $manfaat = 2;
+                  }
                   $post = Rekam::create([
                     'id_pegawai' => $idpegawai,
                     'id_tertanggung' => $idt,
                     'nik' => $niknya,
                     'nama_penerima' => $request->input('nama_penerima'),
-                    'jenis_manfaat' => $request->input('jenis_manfaat'),
+                    'jenis_manfaat' => $manfaat,
                     'tempat_lahir' => $request->input('tempat_lahir'),
                     'tanggal_lahir' => $request->input('tanggal_lahir'),
                     'alamat' => $request->input('alamat'),

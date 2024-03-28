@@ -22,9 +22,9 @@ class RegistrasiController extends Controller
             })->editColumn('jenis_manfaat', function ($registrasi) {
                 if($registrasi->jenis_manfaat == 0){
                   return "Pensiunan";
-                }else if($registrasi->status == 1){
+                }else if($registrasi->jenis_manfaat == 1){
                   return "Janda";
-                }else if($registrasi->status == 2){
+                }else if($registrasi->jenis_manfaat == 2){
                   return "Duda";
                 }else{
                   return "Anak";
